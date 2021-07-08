@@ -12,7 +12,7 @@ class User {
         const client = this.body; //바디에 아이디값 
         const { id, psword } = await UserStorage.getUserInfo(client.id); // 해당하는 정보를 반환
 
-        if(id){
+        if (id) {
             if (id === client.id && psword === client.psword) {
                 return { success: true};
             }
@@ -21,10 +21,14 @@ class User {
         return { success: false, msg: "존재하지 않는 아이디입니다."};
     }
 
-    register() {
+    async register() {
         const client = this.body;
-        UserStorage.save(client);
-        
+        try {
+            const response = await UserStorage.save(client);
+            return(response); 
+        }   catch (err) {
+            return { success: false, msg: err }; 
+        }
     }
 }
 
