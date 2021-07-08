@@ -1,5 +1,6 @@
-"use strict"
+"use strict";
 
+const { response } = require("express");
 const UserStorage = require("./UserStorage");
 
 class User {
@@ -7,9 +8,9 @@ class User {
         this.body = body; // 가져와서
     }
 
-    login() {
+    async login() {
         const client = this.body; //바디에 아이디값 
-        const { id, psword } = UserStorage.getUserInfo(client.id); // 해당하는 정보를 반환
+        const { id, psword } = await UserStorage.getUserInfo(client.id); // 해당하는 정보를 반환
 
         if(id){
             if (id === client.id && psword === client.psword) {
